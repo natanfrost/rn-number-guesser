@@ -16,7 +16,6 @@ export default function App() {
 
   const handleGameOver = () => {
     setIsGameOver(true);
-    setUserNumber(null);
   };
 
   let screen = <StartGame onPickNumber={handleNumberPicked} />;

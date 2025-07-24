@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import Title from "../components/ui/Title";
 import { useEffect, useState } from "react";
 import NumberContainer from "../components/game/NumberContainer";
@@ -7,6 +7,8 @@ import {
   GuessDirection,
   GuessDirectionType,
 } from "../constants/guess_direction";
+import Card from "../components/ui/Card";
+import InstructionText from "../components/ui/InstructionText";
 
 interface GameScreenProps {
   userNumber: number;
@@ -40,11 +42,11 @@ const GameScreen = ({ userNumber, onGameOver }: GameScreenProps) => {
     }
 
     if (direction === GuessDirection.lower) {
-      upperBound = currentGuess - 1;
+      upperBound = currentGuess;
     } else {
       lowerBound = currentGuess + 1;
     }
-    const newGuess = generateRandomNumber(lowerBound, upperBound, userNumber);
+    const newGuess = generateRandomNumber(lowerBound, upperBound, currentGuess);
     setCurrentGuess(newGuess);
   };
 
@@ -58,15 +60,27 @@ const GameScreen = ({ userNumber, onGameOver }: GameScreenProps) => {
     <View style={styles.container}>
       <Title>Opponent's guess</Title>
       <NumberContainer>{currentGuess}</NumberContainer>
-      <Text>Higher or Lower?</Text>
-      <View>
-        <PrimaryButton onPress={() => handleNextGuess(GuessDirection.higher)}>
-          +
-        </PrimaryButton>
-        <PrimaryButton onPress={() => handleNextGuess(GuessDirection.lower)}>
-          -
-        </PrimaryButton>
-      </View>
+      <Card>
+        <InstructionText style={styles.instructionText}>
+          Higher or Lower?
+        </InstructionText>
+        <View style={styles.buttonsContainer}>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton
+              onPress={() => handleNextGuess(GuessDirection.higher)}
+            >
+              +
+            </PrimaryButton>
+          </View>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton
+              onPress={() => handleNextGuess(GuessDirection.lower)}
+            >
+              -
+            </PrimaryButton>
+          </View>
+        </View>
+      </Card>
     </View>
   );
 };
@@ -77,5 +91,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
+  },
+  instructionText: {
+    marginBottom: 24,
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+  },
+  buttonContainer: {
+    flex: 1,
   },
 });
