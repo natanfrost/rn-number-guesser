@@ -9,6 +9,8 @@ import {
 } from "../constants/guess_direction";
 import Card from "../components/ui/Card";
 import InstructionText from "../components/ui/InstructionText";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import Colors from "../constants/colors";
 
 interface GameScreenProps {
   userNumber: number;
@@ -67,16 +69,20 @@ const GameScreen = ({ userNumber, onGameOver }: GameScreenProps) => {
         <View style={styles.buttonsContainer}>
           <View style={styles.buttonContainer}>
             <PrimaryButton
-              onPress={() => handleNextGuess(GuessDirection.higher)}
+              onPress={() => handleNextGuess(GuessDirection.lower)}
             >
-              +
+              <Ionicons
+                name="remove-outline"
+                size={24}
+                color={Colors.textLight}
+              />
             </PrimaryButton>
           </View>
           <View style={styles.buttonContainer}>
             <PrimaryButton
-              onPress={() => handleNextGuess(GuessDirection.lower)}
+              onPress={() => handleNextGuess(GuessDirection.higher)}
             >
-              -
+              <Ionicons name="add-outline" size={24} color="white" />
             </PrimaryButton>
           </View>
         </View>
